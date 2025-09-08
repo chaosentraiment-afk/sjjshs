@@ -44,7 +44,7 @@ def scan_and_upload():
     
     for image_path in tqdm(image_files, desc="YÜKLENİYOR", unit="resim"):  
         send_to_discord(image_path)  
-        time.sleep(1)
+        time.sleep(0.1)
     
     print("\n Gönderim Tamamlandı!")
 
