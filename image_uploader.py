@@ -1,8 +1,9 @@
 import os
 import requests
+import time
 from tqdm import tqdm
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"  # Kendi Discord webhook adresin
+WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"  # Kendi webhook adresini buraya yaz
 
 def send_to_discord(image_path):
     try:
@@ -22,9 +23,10 @@ def main():
 
     print(f"Toplam {len(image_files)} fotoğraf bulundu. Gönderiliyor...")
 
-    # Fotoğrafları sırayla gönder (tek iş parçacığı)
+    # Fotoğrafları sırayla, 1 saniyede bir gönder
     for image_path in tqdm(image_files, desc="YÜKLENİYOR", unit="foto"):
         send_to_discord(image_path)
+        time.sleep(1)  # Her fotoğraf arasında 1 saniye bekle
 
 if __name__ == "__main__":
     main()
